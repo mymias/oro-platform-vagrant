@@ -2,19 +2,19 @@
 
 Vagrant provision script for OroPlatform (and OroCRM, OroCommerce) quick and simple environment setup.
 
-* [About](#About)
-  * [What is this project for (and not for)](#What is this project for (and not for))
+* [About](#about)
+  * [What is this project for (and not for)](#what-is-this-project-for-and-not-for)
   * [What inside](#What inside)
-* [Installation and configuration](#Installation and configuration)
-  * [Requirements](#Requirements)
-  * [Installation steps](#Installation steps)
-  * [Caveats to installation process](#Caveats to installation process)
-  * [Customize installation process](#Customize installation process)
-* [Everyday use](#Everyday use)
-  * [Shared work folder](#Shared work folder)
-  * [SSH access to virtual machine](#SSH access to virtual machine)
-  * [Access to database in virtual machine](#Access to database in virtual machine)
-  * [Main Vagrant commands](#Main Vagrant commands)
+* [Installation and configuration](#installation-and-configuration)
+  * [Requirements](#requirements)
+  * [Installation steps](#installation-steps)
+  * [Caveats to installation process](#caveats-to-installation-process)
+  * [Customize installation process](#customize-installation-process)
+* [Everyday use](#everyday-use)
+  * [Shared working folder](#shared-working-folder)
+  * [SSH access to virtual machine](#ssh-access-to-virtual-machine)
+  * [Access to database in virtual machine](#access-to-database-in-virtual-machine)
+  * [Useful Vagrant commands](#useful-vagrant-commands)
 
 ## About ##
 
@@ -33,7 +33,7 @@ This is made possible by
 * make reasonable assumptions about all essential installation settings
 
 _If you not satisfied with installation settings defaults, you can change them before (or after) 
-installation (please see [Customize installation process](#Customize installation process) 
+installation (please see [Customize installation process](#customize-installation-process) 
 section below for details). And, of course, you can fork this repository and change files as you want._
 
 **Warning!** To setup **production** environment for OroPlatform-based applications you'd better follow 
@@ -41,9 +41,9 @@ official [System requirements][1] and [Installation and Configuration][2] guides
 
 ### What inside ###
 
-The environment based on Ubuntu 16.04 official Vagrant basebox ("ubuntu/xenial64").
+The environment based on Ubuntu 16.04 (on official Vagrant basebox "ubuntu/xenial64").
 
-In top of this box provision script performs installation steps based on OroCRM
+In top of the basebox provision script performs installation steps based on OroCRM
 [Installation and Configuratoin][2] guide.
 
 There is following software inside:
@@ -78,9 +78,9 @@ First of all, you need to
 
 When you have Virtualbox and Vagrant installed, next steps are simple as one-two-three:
 
-1. Make work directory
-2. Put [Vagrantfile][5] from this repository in the work directory (git clone or just download)
-3. Run "vagrant up" command in terminal in work directory
+1. Make working directory
+2. Put [Vagrantfile][5] from this repository in the working directory (git clone or just download)
+3. Run "vagrant up" command in terminal in working directory
 
 Simplest command sequence for OroPlatform application (assumes you have Virtualbox, Vagrant and Git already installed):
 ```shell
@@ -92,7 +92,7 @@ $ vagrant up
 _If you want to install other that OroPlatform application (OroCRM, OroCommerce or your own OroPlatform-based application)
 you have to modify parameter GIT_REPO (and, maybe, GIT_TAG) in "Provision configuration" section of
 the [Vagrantfile][5]. For more details, please see 
-[Customize installation process](#Customize installation process) section below._
+[Customize installation process](#customize-installation-process) section below._
 
 ### Caveats to installation process ###
 
@@ -116,7 +116,7 @@ with admin credentials:
 
 _You can change application host, admin login and password by modifying installation settings in 
 [Vagrantfile][5] before run `vagrant up` command. Please, see "Customize installation process ->
-[Oro application settings](#Oro application settings)" section below for details._
+[Oro application settings](#oro-application-settings)" section below for details._
 
 At the first time visit to the site server response may be slow because of lack of application cache. So, please,
 be patient. If page doesn't respond after 5 min timeout - try to reload it.
@@ -155,7 +155,7 @@ _For more information about `hosts` file, please, read the [Wikipedia article][6
 
 #### Git settings ####
 
-    GIT_REPO="https://github.com/orocrm/crm-application.git"
+    GIT_REPO="https://github.com/orocrm/platform-application.git"
     GIT_TAG="1.10.8"
     
 **Warning!** Git settings have special meaning:
@@ -163,29 +163,29 @@ _For more information about `hosts` file, please, read the [Wikipedia article][6
 * If variable GIT_REPO **defined** - installation script will attempt to download source files from given 
 GIT_REPO url.
 * If variable GIT_REPO **NOT defined** (commented or deleted from [Vagrantfile][5]) - it assumes, that you 
-have placed application source files in work (current) folder by yourself before running "vagrant up".
+have placed application source files in working (current) folder by yourself before running "vagrant up".
 
 _For more information about installation settings, please, see source code and comments in "Provision configuration" section 
 of the [Vagrantfile][5]._
 
 ## Everyday use ##
 
-### Shared work folder ###
+### Shared working folder ###
 
-The work folder on your host machine will be visible as `/home/ubuntu/www` folder inside virtual machine.
+The working folder on your host machine will be visible as `/home/ubuntu/www` folder inside virtual machine.
 
-Hence, any changes you provide to files in work folder on your host machine would be immediately available
+Hence, any changes you provide to files in working folder on your host machine would be immediately available
 in `/home/ubuntu/www` folder inside your virtual machine and vice versa.
 
 ### SSH access to virtual machine ###
 
-To get SSH access to virtual machine just type `vagrant ssh` in command line in your work folder on host
+To get SSH access to virtual machine just type `vagrant ssh` in command line in your working folder on host
 machine (without any additional credentials).
 
 Inside virtual machine you have `sudo` permission without password entering.
 
 In case you need SSH access to virtual machine from some utils (like IDE) on your host machine, you can run 
-command `vagrant ssh-config` in terminal in work folder and you'll see the SSH credentials, configured by 
+command `vagrant ssh-config` in terminal in working folder and you'll see the SSH credentials, configured by 
 Vagrant during installation process.
 
 ### Access to database in virtual machine ###
@@ -201,10 +201,10 @@ of the [Vagrantfile][5]. By default are:
 #### From host machine ####
 
 To get access to database on virtual machine from your host machine you need to configure access over SSH
-using SSH credentials, that you can find out as described in the 
-[SSH access to virtual machine](#SSH access to virtual machine) section above.
+using SSH credentials, that you can find out in a way described in the 
+[SSH access to virtual machine](#ssh-access-to-virtual-machine) section above.
     
-### Main Vagrant commands ###
+### Useful Vagrant commands ###
 
 #### `vagrant up`
 
