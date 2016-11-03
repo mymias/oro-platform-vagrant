@@ -9,6 +9,7 @@ Vagrant provision script for OroPlatform (and OroCRM, OroCommerce) quick and sim
   * [Requirements](#requirements)
   * [Installation steps](#installation-steps)
   * [Caveats to installation process](#caveats-to-installation-process)
+    * [Running multiple VM](#running-multiple-vm)
   * [Customize installation process](#customize-installation-process)
 * [Everyday use](#everyday-use)
   * [Shared working folder](#shared-working-folder)
@@ -120,6 +121,11 @@ _You can change application host, admin login and password by modifying installa
 
 At the first time visit to the site server response may be slow because of lack of application cache. So, please,
 be patient. If page doesn't respond after 5 min timeout - try to reload it.
+
+#### Running multiple VM ####
+If you want simultaneously run multiple virtual machines on your host PC you should put unique value
+to param `host: 8000` in `config.vm.network "forwarded_port"` setting in [Vagrantfile][5] 
+(`host: 8001`, `host: 8002`, etc.) for every instance of VM.
 
 ### Customize installation process ###
 
