@@ -2,9 +2,21 @@
 
 Vagrant provision script for OroPlatform (and OroCRM, OroCommerce) quick and simple environment setup.
 
+For example, to install OroPlatform locally, just run in terminal:
+```shell
+$ git clone https://github.com/NiMias/oro-platform-vagrant.git oroplatform
+$ cd oroplatform
+$ vagrant up
+```
+
+For more details, please, see [Installation and configuration](#installation-and-configuration)
+section.
+
+#### Contents ####
+
 * [About](#about)
   * [What is this project for (and not for)](#what-is-this-project-for-and-not-for)
-  * [What inside](#What inside)
+  * [What inside](#what-inside)
 * [Installation and configuration](#installation-and-configuration)
   * [Requirements](#requirements)
   * [Installation steps](#installation-steps)
