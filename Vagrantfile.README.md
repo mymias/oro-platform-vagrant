@@ -102,6 +102,16 @@ $ cd oroplatform
 $ vagrant up
 ```
 
+After installation finished, you can access application frontend by URL http://localhost:8000/ in your browser 
+with admin credentials:
+
+* login: admin
+* password: adminpass
+
+_You can change application host, admin login, and password by modifying installation settings in 
+[Vagrantfile][5] before run `vagrant up` command. Please, see "Customize installation process ->
+[Oro application settings](#oro-application-settings)" section below for details._
+
 _If you want to install other that OroPlatform application (OroCRM, OroCommerce or your own OroPlatform-based application)
 you have to modify parameter GIT_REPO (and, maybe, GIT_TAG) in "Provision configuration" section of
 the [Vagrantfile][5]. For more details, please see 
@@ -120,16 +130,6 @@ The time depends on your internet connection speed, CPU frequency, etc. In avera
 
 During installation process might be the pauses. It's ok because not all installation steps have detailed
 command-line output. Please, just wait for several minutes.
-
-After installation finished, you can access application frontend by URL http://localhost:8000/ in your browser 
-with admin credentials:
-
-* login: admin
-* password: adminpass
-
-_You can change application host, admin login, and password by modifying installation settings in 
-[Vagrantfile][5] before run `vagrant up` command. Please, see "Customize installation process ->
-[Oro application settings](#oro-application-settings)" section below for details._
 
 At the first time visit to the site, server response may be slow because of lack of application cache. So, please,
 be patient. If the page doesn't respond after 5 min timeout - try to reload it.
