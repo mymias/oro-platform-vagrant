@@ -60,7 +60,7 @@ In the top of the base box provision script performs installation steps based on
 
 There is following software inside:
 
-* LEMP stack
+* LAMP stack
   * Ubuntu 16.04 LTS
   * Nginx 1.10.*
   * MySQL 5.7.*
@@ -121,7 +121,7 @@ the [Vagrantfile][5]. For more details, please see
 The first-time installation on your PC may take some time, for
 
 * Downloading Ubuntu 16.04 base box
-* Installation LEMP stack on guest system
+* Installation LAMP stack on guest system
 * Installation composer dependencies for Oro application
 * Oro application installation process (with, probably, demo data loading).
 
