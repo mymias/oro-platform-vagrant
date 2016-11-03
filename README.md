@@ -60,7 +60,7 @@ In the top of the base box provision script performs installation steps based on
 
 There is following software inside:
 
-* LEMP stack
+* LAMP stack
   * Ubuntu 16.04 LTS
   * Nginx 1.10.*
   * MySQL 5.7.*
