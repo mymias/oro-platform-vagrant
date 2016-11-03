@@ -174,7 +174,7 @@ ____NGINXCONFIGTEMPLATE
  	sed -i 's/;opcache.interned_strings_buffer=[0-9]*/opcache.interned_strings_buffer=8/g' /etc/php/7.0/fpm/php.ini
  	sed -i 's/;opcache.max_accelerated_files=[0-9]*/opcache.max_accelerated_files=11000/g' /etc/php/7.0/fpm/php.ini
  	sed -i 's/;opcache.fast_shutdown=[01]*/opcache.fast_shutdown=1/g' /etc/php/7.0/fpm/php.ini
-    # CLI php.ini
+ 	# CLI php.ini
  	sed -i 's/;date.timezone =/date.timezone = Europe\\/London/g' /etc/php/7.0/cli/php.ini
  	sed -i 's/max_execution_time = [0-9]*/max_execution_time = 600/g' /etc/php/7.0/cli/php.ini
  	sed -i 's/;opcache.enable=0/opcache.enable=1/g' /etc/php/7.0/cli/php.ini
@@ -198,36 +198,36 @@ ____NGINXCONFIGTEMPLATE
 
   	cd www
 
-    # --- Get application source files (if needed) ---
+ 	# --- Get application source files (if needed) ---
 
  	if [ -n $GIT_REPO ]; then
    	    echo -e "\n*** Get source files ***\n"
-        git clone $GIT_REPO tmpdir
+   	    git clone $GIT_REPO tmpdir
 
-        # Checkout a particular tag or branch (if needed)
-        if [ -n $GIT_TAG ]; then
-            cd tmpdir
-            git checkout $GIT_TAG
-            cd ..
-        fi
+   	    # Checkout a particular tag or branch (if needed)
+   	    if [ -n $GIT_TAG ]; then
+   	        cd tmpdir
+   	        git checkout $GIT_TAG
+   	        cd ..
+   	    fi
 
-        # Move source files to working (parent) directory from tmpdir
-        # Move regular files
-        mv tmpdir/* .
-        # Move hidden files and dirs (.gitignore, .travis, etc)
-        rm -rf tmpdir/.git      # remove not needed hidden files and dirs
-        mv -f tmpdir/.[!.]* .
-        # Cleanup
-        rm -rf tmpdir
+   	    # Move source files to working (parent) directory from tmpdir
+   	    # Move regular files
+   	    mv tmpdir/* .
+   	    # Move hidden files and dirs (.gitignore, .travis, etc)
+   	    rm -rf tmpdir/.git      # remove not needed hidden files and dirs
+   	    mv -f tmpdir/.[!.]* .
+   	    # Cleanup
+   	    rm -rf tmpdir
 
-        # add /.vagrant to .gitignore
-        echo ".vagrant" >> .gitignore
-    fi
+   	    # add /.vagrant to .gitignore
+   	    echo ".vagrant" >> .gitignore
+ 	fi
 
  	# --- Speedup Symfony on Vagrant ---
 
  	# See http://www.whitewashing.de/2013/08/19/speedup_symfony2_on_vagrant_boxes.html
-    echo -e "\n*** Speedup Symfony on Vagrant ***\n"
+ 	echo -e "\n*** Speedup Symfony on Vagrant ***\n"
  	rm -rf app/cache app/logs
  	ln -s /dev/shm app/cache
  	ln -s /dev/shm app/logs
@@ -235,7 +235,7 @@ ____NGINXCONFIGTEMPLATE
  	# --- Configure app/config/parameters.yml ---
 
  	# (to prevent composer interactive dialog)
-    echo -e "\n*** Configure app/config/parameters.yml ***\n"
+ 	echo -e "\n*** Configure app/config/parameters.yml ***\n"
  	cp app/config/parameters.yml.dist app/config/parameters.yml
  	sed -i "s/database_user:[ ]*root/database_user: $DB_USER/g" ./app/config/parameters.yml
  	sed -i "s/database_password:[ ]*~/database_password: $DB_PASSWORD/g" ./app/config/parameters.yml
@@ -251,7 +251,7 @@ ____NGINXCONFIGTEMPLATE
    	echo -e "\n*** Run 'composer install' command ***\n"
  	composer install --prefer-dist --no-dev
 
-    # --- Install Oro applicatioin ---
+ 	# --- Install Oro applicatioin ---
 
    	echo -e "\n*** Run 'oro:install' command ***\n"
    	php app/console oro:install --env=prod --application-url="http://$APP_HOST/" --organization-name="Oro Acme Inc" --user-name="$APP_USER" --user-email="admin@example.com" --user-firstname="Bob" --user-lastname="Dylan" --user-password="$APP_PASSWORD" --sample-data=$APP_LOAD_DEMO_DATA --timeout=600 --no-debug
@@ -259,7 +259,7 @@ ____NGINXCONFIGTEMPLATE
    	echo -e "\n*** Run 'oro:api:doc:cache:clear' command ***\n"
    	php app/console oro:api:doc:cache:clear --env=prod
  	
-    # --- Perform final cleaning ---
+ 	# --- Perform final cleaning ---
 
    	echo -e "\n*** Perform final cleaning ***\n"
  	rm ubuntu-xenial-16.04-cloudimg-console.log
