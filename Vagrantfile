@@ -200,12 +200,12 @@ ____NGINXCONFIGTEMPLATE
 
  	# --- Get application source files (if needed) ---
 
- 	if [ -n $GIT_REPO ]; then
+ 	if [ ! -z $GIT_REPO ]; then
    	    echo -e "\n*** Get source files ***\n"
    	    git clone $GIT_REPO tmpdir
 
    	    # Checkout a particular tag or branch (if needed)
-   	    if [ -n $GIT_TAG ]; then
+   	    if [ ! -z $GIT_TAG ]; then
    	        cd tmpdir
    	        git checkout $GIT_TAG
    	        cd ..
