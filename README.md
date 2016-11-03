@@ -21,7 +21,6 @@ section.
   * [Requirements](#requirements)
   * [Installation steps](#installation-steps)
   * [Caveats to installation process](#caveats-to-installation-process)
-    * [Running multiple VM](#running-multiple-vm)
   * [Customize installation process](#customize-installation-process)
 * [Everyday use](#everyday-use)
   * [Shared working folder](#shared-working-folder)
@@ -134,11 +133,6 @@ command-line output. Please, just wait for several minutes.
 At the first time visit to the site, server response may be slow because of lack of application cache. So, please,
 be patient. If the page doesn't respond after 5 min timeout - try to reload it.
 
-#### Running multiple VM ####
-If you want simultaneously run multiple virtual machines on your host PC you should put a unique value
-to param `host: 8000` in `config.vm.network "forwarded_port"` setting in [Vagrantfile][5] 
-(`host: 8001`, `host: 8002`, etc.) for every instance of VM.
-
 ### Customize installation process ###
 
 For simplicity, there are some default values of installation settings, which can be changed by you before installation
@@ -185,6 +179,11 @@ have placed application source files in working (current) folder by yourself bef
 
 _For more information about installation settings, please, see source code and comments in "Provision configuration" section 
 of the [Vagrantfile][5]._
+
+#### Running multiple VM ####
+If you want simultaneously run multiple virtual machines on your host PC you should put a unique value
+to param `host: 8000` in `config.vm.network "forwarded_port"` setting in [Vagrantfile][5] 
+(`host: 8001`, `host: 8002`, etc.) for every instance of VM.
 
 ## Everyday use ##
 
