@@ -97,7 +97,7 @@ Vagrant.configure("2") do |config|
 	# If you don't want to checkout a particular tag or branch (just stay at the HEAD of master
 	# branch), comment GIT_TAG variable below
 	GIT_TAG="1.10.8"
-	
+
 	# --------------------- LEMP installation & configuration ---------------------
 
 	echo -e "\n******** Step 1 of 2. LEMP installation & configuration ********\n"
@@ -107,7 +107,7 @@ Vagrant.configure("2") do |config|
   	echo -e "\n*** Preconfigure mysql root password ***\n"
   	echo "mysql-server mysql-server/root_password password $DB_PASSWORD" | debconf-set-selections
   	echo "mysql-server mysql-server/root_password_again password $DB_PASSWORD" | debconf-set-selections
-  	
+
   	# --- Main installations ---
 
   	echo -e "\n*** Apt-get update ***\n"
@@ -122,7 +122,7 @@ Vagrant.configure("2") do |config|
   	mysql -uroot -p$DB_PASSWORD -e "grant all privileges on $DB_NAME.* to '$DB_USER'@'localhost' identified by '$DB_PASSWORD'"
   	mysql -uroot -p$DB_PASSWORD -e "CREATE DATABASE $DB_NAME_TEST"
   	mysql -uroot -p$DB_PASSWORD -e "grant all privileges on $DB_NAME_TEST.* to '$DB_USER'@'localhost' identified by '$DB_PASSWORD'"
-  	
+
   	# --- Nginx site config ---
 
   	echo -e "\n*** Create nginx site config ***\n"
@@ -140,6 +140,8 @@ Vagrant.configure("2") do |config|
                 fastcgi_pass unix:/run/php/php7.0-fpm.sock;
                 fastcgi_split_path_info ^(.+\.php)(/.*)$;
                 include fastcgi_params;
+                fastcgi_buffers 16 32k;
+                fastcgi_buffer_size 32k;
                 fastcgi_param SCRIPT_FILENAME \\$document_root\\$fastcgi_script_name;
                 fastcgi_param HTTPS off;
             }
@@ -150,18 +152,19 @@ Vagrant.configure("2") do |config|
 ____NGINXCONFIGTEMPLATE
   	ln -s /etc/nginx/sites-available/$APP_HOST /etc/nginx/sites-enabled/$APP_HOST
   	service nginx restart
-  	
+
   	# --- Add ubuntu user to www-data group (for composer) ---
 
    	echo -e "\n*** Add 'ubuntu' user to 'www-data' group and vice versa ***\n"
  	usermod -a -G www-data ubuntu
- 	
+ 	usermod -a -G ubuntu www-data
+
  	# ---  Configure php-fpm ---
 
    	echo -e "\n*** Configure php-fpm ***\n"
  	sed -i 's/;listen.allowed_clients/listen.allowed_clients/g' /etc/php/7.0/fpm/pool.d/www.conf
  	sed -i 's/;pm.max_requests/pm.max_requests/g' /etc/php/7.0/fpm/pool.d/www.conf
- 	
+
  	# --- Set recommended PHP.INI settings ---
 
    	echo -e "\n*** Set php.ini settings ***\n"
@@ -265,10 +268,10 @@ ____NGINXCONFIGTEMPLATE
 
    	echo -e "\n*** Run 'oro:install' command ***\n"
    	php app/console oro:install --env=prod --application-url="http://$APP_HOST/" --organization-name="Oro Acme Inc" --user-name="$APP_USER" --user-email="admin@example.com" --user-firstname="Bob" --user-lastname="Dylan" --user-password="$APP_PASSWORD" --sample-data=$APP_LOAD_DEMO_DATA --timeout=600 --no-debug
-   	
+
    	echo -e "\n*** Run 'oro:api:doc:cache:clear' command ***\n"
    	php app/console oro:api:doc:cache:clear --env=prod
- 	
+
  	# --- Perform final cleaning ---
 
    	echo -e "\n*** Perform final cleaning ***\n"
