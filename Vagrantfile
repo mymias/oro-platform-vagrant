@@ -153,7 +153,7 @@ ____NGINXCONFIGTEMPLATE
   	
   	# --- Add ubuntu user to www-data group (for composer) ---
 
-   	echo -e "\n*** Add 'ubuntu' user to 'www-data' group ***\n"
+   	echo -e "\n*** Add 'ubuntu' user to 'www-data' group and vice versa ***\n"
  	usermod -a -G www-data ubuntu
  	
  	# ---  Configure php-fpm ---
@@ -174,6 +174,8 @@ ____NGINXCONFIGTEMPLATE
  	sed -i 's/;opcache.interned_strings_buffer=[0-9]*/opcache.interned_strings_buffer=8/g' /etc/php/7.0/fpm/php.ini
  	sed -i 's/;opcache.max_accelerated_files=[0-9]*/opcache.max_accelerated_files=11000/g' /etc/php/7.0/fpm/php.ini
  	sed -i 's/;opcache.fast_shutdown=[01]*/opcache.fast_shutdown=1/g' /etc/php/7.0/fpm/php.ini
+ 	sed -i 's/;realpath_cache_size = 16k/realpath_cache_size = 4096k/g' /etc/php/7.0/fpm/php.ini
+ 	sed -i 's/;realpath_cache_ttl = 120/realpath_cache_ttl = 7200/g' /etc/php/7.0/fpm/php.ini
  	# CLI php.ini
  	sed -i 's/;date.timezone =/date.timezone = Europe\\/London/g' /etc/php/7.0/cli/php.ini
  	sed -i 's/max_execution_time = [0-9]*/max_execution_time = 600/g' /etc/php/7.0/cli/php.ini
@@ -182,13 +184,20 @@ ____NGINXCONFIGTEMPLATE
  	sed -i 's/;opcache.interned_strings_buffer=[0-9]*/opcache.interned_strings_buffer=8/g' /etc/php/7.0/cli/php.ini
  	sed -i 's/;opcache.max_accelerated_files=[0-9]*/opcache.max_accelerated_files=11000/g' /etc/php/7.0/cli/php.ini
  	sed -i 's/;opcache.fast_shutdown=[01]*/opcache.fast_shutdown=1/g' /etc/php/7.0/cli/php.ini
+ 	sed -i 's/;realpath_cache_size = 16k/realpath_cache_size = 4096k/g' /etc/php/7.0/cli/php.ini
+ 	sed -i 's/;realpath_cache_ttl = 120/realpath_cache_ttl = 7200/g' /etc/php/7.0/cli/php.ini
 	# "save comments", "load comments" for lexical parser for doctrine?
+
+	service php7.0-fpm restart
 
  	# --- Set recommended MySQL settings ---
 
    	echo -e "\n*** Configure MySQL ***\n"
+	echo -e "\n[mysqld]" >> /etc/mysql/my.cnf
 	echo "innodb_file_per_table = 0" >> /etc/mysql/my.cnf
 	echo "wait_timeout = 28800" >> /etc/mysql/my.cnf
+
+	service mysql restart
 
    	echo -e "\n*** LEMP installation finished ***\n"
 
@@ -229,9 +238,10 @@ ____NGINXCONFIGTEMPLATE
  	# See http://www.whitewashing.de/2013/08/19/speedup_symfony2_on_vagrant_boxes.html
  	echo -e "\n*** Speedup Symfony on Vagrant ***\n"
  	rm -rf app/cache app/logs
- 	ln -s /dev/shm app/cache
- 	ln -s /dev/shm app/logs
- 	
+ 	mkdir /home/ubuntu/cache /home/ubuntu/logs
+ 	ln -s /home/ubuntu/cache app/cache
+ 	ln -s /home/ubuntu/logs app/logs
+
  	# --- Configure app/config/parameters.yml ---
 
  	# (to prevent composer interactive dialog)
@@ -263,7 +273,11 @@ ____NGINXCONFIGTEMPLATE
 
    	echo -e "\n*** Perform final cleaning ***\n"
  	rm ubuntu-xenial-16.04-cloudimg-console.log
- 	
+   	chown -R www-data:www-data /home/ubuntu/cache /home/ubuntu/logs
+   	setfacl -b -R /home/ubuntu/cache /home/ubuntu/logs
+   	find /home/ubuntu/cache -type d -exec chmod 0775 {} \\;
+   	find /home/ubuntu/logs -type d -exec chmod 0775 {} \\;
+
    	echo -e "\n*** Oro application installation finished ***\n"
 
 	# --------------------- Final words ---------------------
