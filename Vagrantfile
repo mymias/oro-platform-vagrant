@@ -113,7 +113,7 @@ Vagrant.configure("2") do |config|
   	echo -e "\n*** Apt-get update ***\n"
   	apt-get update
   	echo -e "\n*** Install git, nginx, php, mysql-client, mysql-server, nodejs ***\n"
-  	apt-get install --assume-yes git nginx mysql-client mysql-server nodejs php php7.0-xml php7.0-intl php7.0-mysql php-mbstring php7.0-curl php7.0-gd php7.0-mcrypt php7.0-soap php7.0-tidy php7.0-zip
+  	apt-get install --assume-yes git nginx mysql-client mysql-server nodejs php php7.0-xml php7.0-intl php7.0-mysql php-mbstring php7.0-curl php7.0-gd php7.0-mcrypt php7.0-soap php7.0-tidy php7.0-zip php-ldap
 
   	# --- DB installation tuning ---
 
